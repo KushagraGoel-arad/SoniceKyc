@@ -21,8 +21,7 @@ Map<String, dynamic> createRequestData({
   };
 }
 
-Future<Map<String, Object>> ApiService(
-    String url, Map<String, dynamic> body, String jwt, bool loader) async {
+Future<Map<String, Object>> CreateApplication() async {
   String getCurrentDateTime() {
     var now = DateTime.now();
     var formatter = DateFormat('yyyy-MM-dd HH:mm:ss');
@@ -30,6 +29,8 @@ Future<Map<String, Object>> ApiService(
   }
 
   String requestTime = getCurrentDateTime();
+  final url =
+      'https://access.axiomprotect.com:6653/AxiomProtect/v1/WD/sonicKYC/CreateApplication?requestTime=${requestTime}';
 
   // Replace with the appropriate data for your API request.
   final requestData = createRequestData(
@@ -41,24 +42,18 @@ Future<Map<String, Object>> ApiService(
     phone:
         '8851019233', // Using ?? to provide a default value if phone is null.
     applicationNo: 'kusha123456788',
-   
+    // Add the data needed for your API request here.
   );
-  var headers = {
+
+  final headers = {
     'Content-Type': 'application/json',
-    // 'authToken': jwt
+    // Add any other headers required by your API here.
   };
-  if (jwt != null) {
-    headers = {
-      'Content-Type': 'application/json',
-      'authToken': jwt
-     
-    };
-  }
 
   final response = await http.post(
     Uri.parse(url),
     headers: headers,
-    body: jsonEncode(body),
+    body: jsonEncode(requestData),
   );
 
   if (response.statusCode == 200) {
