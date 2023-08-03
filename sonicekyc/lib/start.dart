@@ -10,6 +10,25 @@ class start extends StatefulWidget {
 }
 
 class _startState extends State<start> {
+  Future<void> _getPolicyDetailsAndToken() async {
+    try {
+      final result = await CreateApplication();
+      final Object? jwtToken = result['jwtToken'];
+      final Object? policyDetails = result['policyDetails'];
+
+      // Use the JWT token and policy details as needed
+      print('JWT Token: $jwtToken');
+      print('Policy Details: $policyDetails');
+    } catch (e) {
+      print('Error occurred while fetching policy details and token: $e');
+    }
+  }
+
+  void initState() {
+    super.initState();
+    _getPolicyDetailsAndToken();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,7 +81,6 @@ class _startState extends State<start> {
                   backgroundColor: const Color(0xFF2C32BE),
                 ),
                 onPressed: () {
-                  makePostRequest();
                   Navigator.push(
                     context,
                     MaterialPageRoute(
